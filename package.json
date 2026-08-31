@@ -31,6 +31,16 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./citation-chip": {
+      "import": {
+        "types": "./dist/citation-chip.d.ts",
+        "default": "./dist/citation-chip.js"
+      },
+      "require": {
+        "types": "./dist/citation-chip.d.cts",
+        "default": "./dist/citation-chip.cjs"
+      }
+    },
     "./confidence-badge": {
       "import": {
         "types": "./dist/confidence-badge.d.ts",

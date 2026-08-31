@@ -7,17 +7,36 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: in development — 2 of 7 components.**
+**Status: in development — 3 of 7 components.**
 
 | Component | Status |
 |---|---|
+| `CitationChip` | ready |
 | `ConfidenceBadge` | ready |
 | `TokenMeter` | ready |
-| `CitationChip`, `ToolCallTimeline`, `RetrievalTrace`, `StreamingMessage`, `AssistantComposer` | planned |
+| `ToolCallTimeline`, `RetrievalTrace`, `StreamingMessage`, `AssistantComposer` | planned |
 
 ```tsx
+import { CitationChip } from "atlas-ui/citation-chip";
 import { ConfidenceBadge, confidenceFromScore } from "atlas-ui/confidence-badge";
 import { TokenMeter } from "atlas-ui/token-meter";
+
+<p>
+  A common object requires shared intent
+  <CitationChip
+    index={1}
+    source={{
+      id: "sec-149",
+      title: "Indian Penal Code, 1860",
+      locator: "§ 149",
+      snippet: "Every member of unlawful assembly guilty of offence committed…",
+      score: 0.92,
+      scoreLabel: "fused",
+      retriever: "bm25 + InLegalBERT",
+      url: "/corpus/ipc/149",
+    }}
+  />, not mere presence.
+</p>
 
 <ConfidenceBadge level={confidenceFromScore(0.91)} score={0.91} showScore />
 <TokenMeter
@@ -26,6 +45,10 @@ import { TokenMeter } from "atlas-ui/token-meter";
   pricing={{ promptPerMTok: 3, completionPerMTok: 15, cachedPromptPerMTok: 0.3 }}
 />
 ```
+
+The citation preview opens on hover *or* focus. Hover open/close is debounced
+so the pointer can travel from the chip to the card's link; a focus-opened
+preview never closes on `pointerleave`, only on blur or `Escape`.
 
 Prefer the per-component subpaths (`atlas-ui/confidence-badge`) — they
 guarantee you only ship what you import, in every bundler. The barrel
