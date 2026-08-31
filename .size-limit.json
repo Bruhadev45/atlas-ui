@@ -39,6 +39,19 @@
     ]
   },
   {
+    "name": "atlas-ui/retrieval-trace",
+    "path": "dist/retrieval-trace.js",
+    "limit": "9 kB",
+    "ignore": [
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-slot",
+      "clsx",
+      "tailwind-merge"
+    ]
+  },
+  {
     "name": "atlas-ui (barrel)",
     "path": "dist/index.js",
     "limit": "42 kB"

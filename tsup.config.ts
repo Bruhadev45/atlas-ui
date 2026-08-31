@@ -14,6 +14,7 @@ const componentEntries = {
   "citation-chip": "src/components/citation-chip/index.ts",
   "confidence-badge": "src/components/confidence-badge/index.ts",
   "token-meter": "src/components/token-meter/index.ts",
+  "retrieval-trace": "src/components/retrieval-trace/index.ts",
   hooks: "src/hooks/index.ts",
   utils: "src/lib/index.ts",
 };

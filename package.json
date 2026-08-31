@@ -61,6 +61,16 @@
         "default": "./dist/token-meter.cjs"
       }
     },
+    "./retrieval-trace": {
+      "import": {
+        "types": "./dist/retrieval-trace.d.ts",
+        "default": "./dist/retrieval-trace.js"
+      },
+      "require": {
+        "types": "./dist/retrieval-trace.d.cts",
+        "default": "./dist/retrieval-trace.cjs"
+      }
+    },
     "./hooks": {
       "import": {
         "types": "./dist/hooks.d.ts",

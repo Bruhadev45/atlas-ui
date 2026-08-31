@@ -7,14 +7,15 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: in development — 3 of 7 components.**
+**Status: in development — 4 of 7 components.**
 
 | Component | Status |
 |---|---|
 | `CitationChip` | ready |
 | `ConfidenceBadge` | ready |
 | `TokenMeter` | ready |
-| `ToolCallTimeline`, `RetrievalTrace`, `StreamingMessage`, `AssistantComposer` | planned |
+| `RetrievalTrace` | ready |
+| `ToolCallTimeline`, `StreamingMessage`, `AssistantComposer` | planned |
 
 ```tsx
 import { CitationChip } from "atlas-ui/citation-chip";
@@ -45,6 +46,33 @@ import { TokenMeter } from "atlas-ui/token-meter";
   pricing={{ promptPerMTok: 3, completionPerMTok: 15, cachedPromptPerMTok: 0.3 }}
 />
 ```
+
+Retrieval results come with their provenance intact. `fromRagfuse` maps the
+JSON of [ragfuse](https://github.com/Bruhadev45/ragfuse)'s `FusedHit` — either
+casing — onto display fields, and `RetrievalTrace` renders the ranking as an
+`<ol>` in which every hit says, in text, which retriever found it and where:
+
+```tsx
+import { RetrievalTrace } from "atlas-ui/retrieval-trace";
+import { fromRagfuse } from "atlas-ui/utils";
+
+<RetrievalTrace
+  chunks={fromRagfuse<Statute>(response.hits, {
+    getTitle: (s) => `${s.act} ${s.section}`,
+    getText: (s) => s.text,
+    getUrl: (s) => `/corpus/${s.id}`,
+  })}
+  query={question}
+  highlightQueryTerms
+  retrievers={[
+    { name: "bm25", label: "BM25", weight: 0.6 },
+    { name: "dense", label: "InLegalBERT", weight: 0.4 },
+  ]}
+/>
+```
+
+Each badge reads `bm25 · rank 1 · w 0.6`; colour is a redundant second channel,
+so a four-retriever trace stays intelligible read aloud or in greyscale.
 
 The citation preview opens on hover *or* focus. Hover open/close is debounced
 so the pointer can travel from the chip to the card's link; a focus-opened
