@@ -1,0 +1,38 @@
+[
+  {
+    "name": "atlas-ui/confidence-badge",
+    "path": "dist/confidence-badge.js",
+    "limit": "4 kB",
+    "ignore": [
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-slot",
+      "clsx",
+      "tailwind-merge"
+    ]
+  },
+  {
+    "name": "atlas-ui/token-meter",
+    "path": "dist/token-meter.js",
+    "limit": "5 kB",
+    "ignore": [
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-slot",
+      "clsx",
+      "tailwind-merge"
+    ]
+  },
+  {
+    "name": "atlas-ui (barrel)",
+    "path": "dist/index.js",
+    "limit": "42 kB"
+  },
+  {
+    "name": "atlas-ui/styles.css",
+    "path": "dist/styles.css",
+    "limit": "12 kB"
+  }
+]

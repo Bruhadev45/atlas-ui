@@ -1,0 +1,160 @@
+{
+  "name": "atlas-ui",
+  "version": "0.1.0",
+  "description": "Opinionated React components for AI application interfaces: streaming, citations, confidence, tool traces, token budgets, retrieval provenance.",
+  "author": "Kandimalla Bruhadev",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./confidence-badge": {
+      "import": {
+        "types": "./dist/confidence-badge.d.ts",
+        "default": "./dist/confidence-badge.js"
+      },
+      "require": {
+        "types": "./dist/confidence-badge.d.cts",
+        "default": "./dist/confidence-badge.cjs"
+      }
+    },
+    "./token-meter": {
+      "import": {
+        "types": "./dist/token-meter.d.ts",
+        "default": "./dist/token-meter.js"
+      },
+      "require": {
+        "types": "./dist/token-meter.d.cts",
+        "default": "./dist/token-meter.cjs"
+      }
+    },
+    "./hooks": {
+      "import": {
+        "types": "./dist/hooks.d.ts",
+        "default": "./dist/hooks.js"
+      },
+      "require": {
+        "types": "./dist/hooks.d.cts",
+        "default": "./dist/hooks.cjs"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      },
+      "require": {
+        "types": "./dist/utils.d.cts",
+        "default": "./dist/utils.cjs"
+      }
+    },
+    "./preset": {
+      "import": {
+        "types": "./dist/preset.d.ts",
+        "default": "./dist/preset.js"
+      },
+      "require": {
+        "types": "./dist/preset.d.cts",
+        "default": "./dist/preset.cjs"
+      }
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./theme.css": "./dist/theme.css",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "tailwindcss": ">=3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-popover": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@size-limit/preset-small-lib": "^11.1.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/node": "^22.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "eslint": "^9.9.0",
+    "jsdom": "^25.0.0",
+    "publint": "^0.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "size-limit": "^11.1.0",
+    "tailwindcss": "^3.4.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^2.1.0",
+    "vitest-axe": "^0.1.0"
+  },
+  "scripts": {
+    "build": "tsup && npm run build:css",
+    "build:css": "tailwindcss -c tailwind.build.config.ts -i src/styles/build.css -o dist/styles.css --minify && cp src/styles/tokens.css src/styles/theme.css dist/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "size": "size-limit",
+    "check:pkg": "publint && attw --pack . --profile node16 --exclude-entrypoints ./styles.css ./tokens.css ./theme.css",
+    "prepublishOnly": "npm run build && npm run check:pkg"
+  },
+  "keywords": [
+    "react",
+    "tailwind",
+    "ai",
+    "llm",
+    "rag",
+    "chat-ui",
+    "streaming",
+    "citations",
+    "components",
+    "typescript",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bruhadev45/atlas-ui.git"
+  },
+  "homepage": "https://github.com/Bruhadev45/atlas-ui#readme"
+}

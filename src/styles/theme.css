@@ -1,0 +1,19 @@
+/* atlas-ui/theme.css — Tailwind 4 */
+@theme inline {
+  --color-surface:        hsl(var(--atlas-surface));
+  --color-surface-raised: hsl(var(--atlas-surface-raised));
+  --color-surface-sunken: hsl(var(--atlas-surface-sunken));
+  --color-fg:             hsl(var(--atlas-fg));
+  --color-fg-muted:       hsl(var(--atlas-fg-muted));
+  --color-fg-subtle:      hsl(var(--atlas-fg-subtle));
+  --color-border:         hsl(var(--atlas-border));
+  --color-ring:           hsl(var(--atlas-ring));
+  --color-accent:         hsl(var(--atlas-accent));
+  --color-accent-fg:      hsl(var(--atlas-accent-fg));
+  --color-conf-high:         hsl(var(--atlas-conf-high));
+  --color-conf-medium:       hsl(var(--atlas-conf-medium));
+  --color-conf-low:          hsl(var(--atlas-conf-low));
+  --color-conf-insufficient: hsl(var(--atlas-conf-insufficient));
+  --radius: var(--atlas-radius);
+}
+@source "../node_modules/atlas-ui/dist";

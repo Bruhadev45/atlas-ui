@@ -1,0 +1,136 @@
+/* atlas-ui token layer. Colours are space-separated HSL channels, not finished
+   colours, so Tailwind's <alpha-value> works (bg-conf-high/12 becomes a real
+   translucent fill). Shipped verbatim as dist/tokens.css. */
+
+:root {
+  /* surfaces */
+  --atlas-surface:         0 0% 100%;
+  --atlas-surface-raised:  0 0% 98%;
+  --atlas-surface-sunken:  220 14% 96%;
+
+  /* foreground */
+  --atlas-fg:              222 47% 11%;
+  --atlas-fg-muted:        215 16% 40%;
+  --atlas-fg-subtle:       215 14% 55%;
+
+  /* lines & focus */
+  --atlas-border:          220 13% 88%;
+  --atlas-ring:            221 83% 53%;
+
+  /* brand */
+  --atlas-accent:          221 83% 53%;
+  --atlas-accent-fg:       0 0% 100%;
+
+  /* status */
+  --atlas-success:         142 71% 33%;
+  --atlas-warning:          32 85% 40%;
+  --atlas-danger:            0 72% 45%;
+  --atlas-info:            199 89% 40%;
+
+  /* confidence (own scale: must stay distinguishable from status colours) */
+  --atlas-conf-high:         160 84% 28%;
+  --atlas-conf-medium:        38 92% 38%;
+  --atlas-conf-low:           14 85% 47%;
+  --atlas-conf-insufficient: 215 16% 47%;
+
+  /* retriever default palette, overridable per RetrieverDescriptor.color */
+  --atlas-retriever-1: 221 83% 53%;
+  --atlas-retriever-2: 271 76% 53%;
+  --atlas-retriever-3: 170 70% 36%;
+  --atlas-retriever-4:  25 85% 48%;
+
+  /* geometry & motion */
+  --atlas-radius:       0.5rem;
+  --atlas-radius-sm:    0.3rem;
+  --atlas-radius-lg:    0.75rem;
+  --atlas-duration:     150ms;
+  --atlas-ease:         cubic-bezier(0.2, 0, 0.13, 1);
+}
+
+.dark,
+[data-theme="dark"] {
+  --atlas-surface:         222 47% 8%;
+  --atlas-surface-raised:  222 40% 12%;
+  --atlas-surface-sunken:  222 47% 6%;
+
+  --atlas-fg:              210 20% 96%;
+  --atlas-fg-muted:        215 16% 70%;
+  --atlas-fg-subtle:       215 14% 58%;
+
+  --atlas-border:          217 25% 22%;
+  --atlas-ring:            217 91% 65%;
+
+  --atlas-accent:          217 91% 62%;
+  --atlas-accent-fg:       222 47% 8%;
+
+  --atlas-success:         142 60% 52%;
+  --atlas-warning:          38 90% 60%;
+  --atlas-danger:            0 78% 66%;
+  --atlas-info:            199 89% 62%;
+
+  --atlas-conf-high:         160 70% 48%;
+  --atlas-conf-medium:        38 90% 58%;
+  --atlas-conf-low:           14 88% 62%;
+  --atlas-conf-insufficient: 215 16% 62%;
+}
+
+/* System preference, only when the app has not pinned a theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-theme="light"]) {
+    --atlas-surface:         222 47% 8%;
+    --atlas-surface-raised:  222 40% 12%;
+    --atlas-surface-sunken:  222 47% 6%;
+
+    --atlas-fg:              210 20% 96%;
+    --atlas-fg-muted:        215 16% 70%;
+    --atlas-fg-subtle:       215 14% 58%;
+
+    --atlas-border:          217 25% 22%;
+    --atlas-ring:            217 91% 65%;
+
+    --atlas-accent:          217 91% 62%;
+    --atlas-accent-fg:       222 47% 8%;
+
+    --atlas-success:         142 60% 52%;
+    --atlas-warning:          38 90% 60%;
+    --atlas-danger:            0 78% 66%;
+    --atlas-info:            199 89% 62%;
+
+    --atlas-conf-high:         160 70% 48%;
+    --atlas-conf-medium:        38 90% 58%;
+    --atlas-conf-low:           14 88% 62%;
+    --atlas-conf-insufficient: 215 16% 62%;
+  }
+}
+
+/* The only hand-written CSS: behaviour that cannot be a static utility. */
+@layer components {
+  /* StreamingMessage caret */
+  .atlas-cursor {
+    display: inline-block;
+    width: 0.5ch;
+    height: 1em;
+    translate: 0 0.12em;
+    background: hsl(var(--atlas-fg) / 0.75);
+    animation: atlas-blink 1.05s steps(2, start) infinite;
+  }
+  @keyframes atlas-blink { 50% { opacity: 0; } }
+
+  /* TokenMeter fill: a geometric value, not a generated class */
+  .atlas-meter-fill {
+    width: var(--atlas-meter-fill, 0%);
+    transition: width var(--atlas-duration) var(--atlas-ease);
+  }
+
+  /* Collapsible height animation via Radix's measured variable */
+  .atlas-collapse[data-state="open"]   { animation: atlas-open   var(--atlas-duration) var(--atlas-ease); }
+  .atlas-collapse[data-state="closed"] { animation: atlas-closed var(--atlas-duration) var(--atlas-ease); }
+  @keyframes atlas-open   { from { height: 0 } to { height: var(--radix-collapsible-content-height) } }
+  @keyframes atlas-closed { from { height: var(--radix-collapsible-content-height) } to { height: 0 } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-cursor { animation: none; opacity: 1; }
+  .atlas-meter-fill { transition: none; }
+  .atlas-collapse[data-state] { animation: none; }
+}
