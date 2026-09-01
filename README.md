@@ -7,7 +7,7 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: in development — 4 of 7 components.**
+**Status: in development — 5 of 7 components.**
 
 | Component | Status |
 |---|---|
@@ -15,7 +15,8 @@ your own styles.
 | `ConfidenceBadge` | ready |
 | `TokenMeter` | ready |
 | `RetrievalTrace` | ready |
-| `ToolCallTimeline`, `StreamingMessage`, `AssistantComposer` | planned |
+| `ToolCallTimeline` | ready |
+| `StreamingMessage`, `AssistantComposer` | planned |
 
 ```tsx
 import { CitationChip } from "atlas-ui/citation-chip";
@@ -73,6 +74,38 @@ import { fromRagfuse } from "atlas-ui/utils";
 
 Each badge reads `bm25 · rank 1 · w 0.6`; colour is a redundant second channel,
 so a four-retriever trace stays intelligible read aloud or in greyscale.
+
+An agent's tool calls render as a nested disclosure list. Arguments and results
+are serialised through `safeStringify`, which **redacts credential-shaped keys
+by default** — a debug timeline is exactly the surface that ends up in a
+screenshot or a support ticket. `redactKeys` widens that list rather than
+replacing it; `redactKeys={[]}` is the explicit opt-out.
+
+```tsx
+import { ToolCallTimeline } from "atlas-ui/tool-call-timeline";
+
+<ToolCallTimeline
+  calls={[
+    { id: "t1", name: "classify_query", status: "ok", durationMs: 120,
+      args: { query: "common object under s.149" },
+      result: { intent: "statute_lookup", jurisdiction: "IN" } },
+    { id: "t2", name: "hybrid_retrieve", status: "running", startedAt: Date.now() - 1400,
+      args: { top_k: 8, weights: { bm25: 0.6, dense: 0.4 } },
+      children: [
+        { id: "t2a", name: "bm25_search", status: "ok", durationMs: 61 },
+        { id: "t2b", name: "dense_search", status: "running" },
+      ] },
+  ]}
+  redactKeys={["ssn"]}
+/>
+```
+
+Rows are ordinary buttons in the natural tab order — `Enter`/`Space` toggle,
+and `ArrowRight`/`ArrowLeft`/`Home`/`End` are added on top for tree-style
+movement without trapping focus or stealing text selection inside a panel.
+Every row's accessible name spells its status and duration out ("Succeeded,
+120 milliseconds"), so colour and the five status shapes are reinforcement,
+never the signal.
 
 The citation preview opens on hover *or* focus. Hover open/close is debounced
 so the pointer can travel from the chip to the card's link; a focus-opened

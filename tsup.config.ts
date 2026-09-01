@@ -15,6 +15,7 @@ const componentEntries = {
   "confidence-badge": "src/components/confidence-badge/index.ts",
   "token-meter": "src/components/token-meter/index.ts",
   "retrieval-trace": "src/components/retrieval-trace/index.ts",
+  "tool-call-timeline": "src/components/tool-call-timeline/index.ts",
   hooks: "src/hooks/index.ts",
   utils: "src/lib/index.ts",
 };

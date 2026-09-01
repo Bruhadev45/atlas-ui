@@ -71,6 +71,16 @@
         "default": "./dist/retrieval-trace.cjs"
       }
     },
+    "./tool-call-timeline": {
+      "import": {
+        "types": "./dist/tool-call-timeline.d.ts",
+        "default": "./dist/tool-call-timeline.js"
+      },
+      "require": {
+        "types": "./dist/tool-call-timeline.d.cts",
+        "default": "./dist/tool-call-timeline.cjs"
+      }
+    },
     "./hooks": {
       "import": {
         "types": "./dist/hooks.d.ts",

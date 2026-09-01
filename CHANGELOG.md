@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- `ToolCallTimeline` — nested agent tool calls as a disclosure tree (not a
+  `role="tree"`), with redaction on by default, additive arrow-key shortcuts,
+  a `maxDepth` fold row that raises the depth instead of dead-ending, and
+  status carried by shape and text as well as colour.
 - `CitationChip` — inline citation marker opening a source preview on hover or
   focus, with debounced safe-path close, numeric/dot/text variants, `asChild`,
   and provenance rendered as text.

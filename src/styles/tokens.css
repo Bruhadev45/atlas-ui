@@ -122,6 +122,12 @@
     transition: width var(--atlas-duration) var(--atlas-ease);
   }
 
+  /* ToolCallTimeline "running" spinner. The dot inside the same SVG is the
+     reduced-motion fallback: a frozen arc reads as a broken glyph. */
+  .atlas-spinner { animation: atlas-spin 0.8s linear infinite; }
+  .atlas-spinner .atlas-spinner-dot { display: none; }
+  @keyframes atlas-spin { to { rotate: 360deg } }
+
   /* Collapsible height animation via Radix's measured variable */
   .atlas-collapse[data-state="open"]   { animation: atlas-open   var(--atlas-duration) var(--atlas-ease); }
   .atlas-collapse[data-state="closed"] { animation: atlas-closed var(--atlas-duration) var(--atlas-ease); }
@@ -133,4 +139,7 @@
   .atlas-cursor { animation: none; opacity: 1; }
   .atlas-meter-fill { transition: none; }
   .atlas-collapse[data-state] { animation: none; }
+  .atlas-spinner { animation: none; }
+  .atlas-spinner .atlas-spinner-arc { display: none; }
+  .atlas-spinner .atlas-spinner-dot { display: inline; }
 }
