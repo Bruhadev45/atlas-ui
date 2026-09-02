@@ -31,6 +31,16 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./streaming-message": {
+      "import": {
+        "types": "./dist/streaming-message.d.ts",
+        "default": "./dist/streaming-message.js"
+      },
+      "require": {
+        "types": "./dist/streaming-message.d.cts",
+        "default": "./dist/streaming-message.cjs"
+      }
+    },
     "./citation-chip": {
       "import": {
         "types": "./dist/citation-chip.d.ts",

@@ -1,5 +1,18 @@
 [
   {
+    "name": "atlas-ui/streaming-message",
+    "path": "dist/streaming-message.js",
+    "limit": "6 kB",
+    "ignore": [
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-slot",
+      "clsx",
+      "tailwind-merge"
+    ]
+  },
+  {
     "name": "atlas-ui/citation-chip",
     "path": "dist/citation-chip.js",
     "limit": "16 kB",

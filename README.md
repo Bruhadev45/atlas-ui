@@ -7,7 +7,7 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: in development — 5 of 7 components.**
+**Status: in development — 6 of 7 components.**
 
 | Component | Status |
 |---|---|
@@ -16,7 +16,8 @@ your own styles.
 | `TokenMeter` | ready |
 | `RetrievalTrace` | ready |
 | `ToolCallTimeline` | ready |
-| `StreamingMessage`, `AssistantComposer` | planned |
+| `StreamingMessage` | ready |
+| `AssistantComposer` | planned |
 
 ```tsx
 import { CitationChip } from "atlas-ui/citation-chip";
@@ -106,6 +107,45 @@ movement without trapping focus or stealing text selection inside a panel.
 Every row's accessible name spells its status and duration out ("Succeeded,
 120 milliseconds"), so colour and the five status shapes are reinforcement,
 never the signal.
+
+`StreamingMessage` renders model output as it arrives. It owns no transport —
+`content` and `status` are props, so it composes with the Vercel AI SDK, a raw
+`ReadableStream`, or a WebSocket without fighting any of them:
+
+```tsx
+import { StreamingMessage } from "atlas-ui/streaming-message";
+
+<StreamingMessage
+  content={text}
+  status={isLoading ? "streaming" : "complete"}
+  announceOn="sentence"
+  throttleMs={50}
+  onStop={stop}
+  onRegenerate={reload}
+/>
+```
+
+The streaming text is deliberately **not** a live region: marking a growing
+paragraph `aria-live` makes a screen reader re-read it on every chunk. Instead
+the container is `aria-busy` while streaming and a separate `sr-only` region
+announces either the finished answer or each sentence as it terminates.
+
+`completePartialMarkdown` (exported on its own, and applied by default before
+`renderContent` runs) is what keeps half-written syntax from flashing: it
+closes an open code fence, balances trailing `**` / `*` / `_` / `` ` `` with a
+stack so nested marks close innermost-first, and drops a `[label](htt` that has
+not finished arriving. Finished markdown is a fixed point of the pass, so it is
+safe to leave on for the whole stream.
+
+```ts
+completePartialMarkdown("the *ratio decidendi");   // "the *ratio decidendi*"
+completePartialMarkdown("```py\nimport os");        // "```py\nimport os\n```"
+completePartialMarkdown("see [the act](htt");      // "see "
+```
+
+`throttleMs` caps the render rate for fast streams and always flushes the exact
+final `content` on the transition out of `"streaming"`, so the buffer is a
+rate limiter and never a source of truth.
 
 The citation preview opens on hover *or* focus. Hover open/close is debounced
 so the pointer can travel from the chip to the card's link; a focus-opened

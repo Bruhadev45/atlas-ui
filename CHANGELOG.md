@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- `StreamingMessage` — controlled streaming output with a blinking caret, a
+  stop/regenerate group that never swaps in place, an optional render-rate
+  throttle that always flushes the exact final text, and announcements in a
+  separate `sr-only` region rather than on the growing paragraph.
+- `completePartialMarkdown()` — closes open code fences, balances trailing
+  `**` / `*` / `_` / `` ` `` with a delimiter stack, and drops half-written
+  links so mid-stream markdown does not flicker.
 - `ToolCallTimeline` — nested agent tool calls as a disclosure tree (not a
   `role="tree"`), with redaction on by default, additive arrow-key shortcuts,
   a `maxDepth` fold row that raises the depth instead of dead-ending, and

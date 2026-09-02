@@ -11,6 +11,7 @@ rmSync("dist", { recursive: true, force: true });
 
 const componentEntries = {
   index: "src/index.ts",
+  "streaming-message": "src/components/streaming-message/index.ts",
   "citation-chip": "src/components/citation-chip/index.ts",
   "confidence-badge": "src/components/confidence-badge/index.ts",
   "token-meter": "src/components/token-meter/index.ts",
