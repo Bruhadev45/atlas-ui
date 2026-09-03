@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- `AssistantComposer` — a real `<form>` with a submit button, an autosizing
+  textarea, a slash-command combobox, controlled-only attachments validated
+  against `accept` / `maxFiles` / `maxFileSize` with `onFileRejected`, and
+  paste and drop running that same validation. `Escape` closes the menu and
+  never clears the draft.
+- `useSlashCommands()` — the command-palette half on its own: menu state, the
+  full keyboard matrix and the combobox prop getters, owning no text. `onSelect`
+  hands back a pure `replace(text)` the consumer applies to its own state.
+- The `atlas-ui` barrel budget moved 42 kB -> 46 kB now that all seven
+  components ship in it (measured 44.46 kB). Per-component budgets unchanged.
+
 - `StreamingMessage` — controlled streaming output with a blinking caret, a
   stop/regenerate group that never swaps in place, an optional render-rate
   throttle that always flushes the exact final text, and announcements in a

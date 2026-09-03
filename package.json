@@ -91,6 +91,16 @@
         "default": "./dist/tool-call-timeline.cjs"
       }
     },
+    "./assistant-composer": {
+      "import": {
+        "types": "./dist/assistant-composer.d.ts",
+        "default": "./dist/assistant-composer.js"
+      },
+      "require": {
+        "types": "./dist/assistant-composer.d.cts",
+        "default": "./dist/assistant-composer.cjs"
+      }
+    },
     "./hooks": {
       "import": {
         "types": "./dist/hooks.d.ts",

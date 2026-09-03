@@ -2155,10 +2155,12 @@ Enforced by `size-limit` in CI. These are budgets to design against, not measure
 | `atlas-ui/tool-call-timeline` | 9 kB |
 | `atlas-ui/retrieval-trace` | 9 kB |
 | `atlas-ui/assistant-composer` | 10 kB |
-| `atlas-ui` (barrel, everything) | 42 kB |
+| `atlas-ui` (barrel, everything) | 46 kB |
 | `atlas-ui/styles.css` | 12 kB |
 
 If any budget is exceeded the build fails. This is the mechanism that keeps "small and opinionated" true past v0.1.0.
+
+The barrel budget was raised from 42 kB to 46 kB when the seventh component landed: measured, the barrel went from 40.75 kB with six components to 44.46 kB with `AssistantComposer` (which is 5.05 kB against its own 10 kB budget). The per-component budgets are unchanged and remain the ones that matter, because the subpath imports are the recommended way to consume the library.
 
 ---
 

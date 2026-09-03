@@ -17,6 +17,7 @@ const componentEntries = {
   "token-meter": "src/components/token-meter/index.ts",
   "retrieval-trace": "src/components/retrieval-trace/index.ts",
   "tool-call-timeline": "src/components/tool-call-timeline/index.ts",
+  "assistant-composer": "src/components/assistant-composer/index.ts",
   hooks: "src/hooks/index.ts",
   utils: "src/lib/index.ts",
 };

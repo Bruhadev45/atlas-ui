@@ -7,7 +7,7 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: in development — 6 of 7 components.**
+**Status: all seven components implemented.**
 
 | Component | Status |
 |---|---|
@@ -17,7 +17,7 @@ your own styles.
 | `RetrievalTrace` | ready |
 | `ToolCallTimeline` | ready |
 | `StreamingMessage` | ready |
-| `AssistantComposer` | planned |
+| `AssistantComposer` | ready |
 
 ```tsx
 import { CitationChip } from "atlas-ui/citation-chip";
@@ -146,6 +146,60 @@ completePartialMarkdown("see [the act](htt");      // "see "
 `throttleMs` caps the render rate for fast streams and always flushes the exact
 final `content` on the transition out of `"streaming"`, so the buffer is a
 rate limiter and never a source of truth.
+
+`AssistantComposer` is the input side: a real `<form>` whose send control is a
+`<button type="submit">`, with a slash-command palette, controlled attachments
+and an autosizing textarea.
+
+```tsx
+import { AssistantComposer } from "atlas-ui/assistant-composer";
+
+<AssistantComposer
+  value={text}
+  onValueChange={setText}
+  onSubmit={({ text, attachments }) => ask(text, attachments)}
+  maxLength={4000}
+  commands={[
+    { id: "cite", name: "cite", description: "Cite a specific section", group: "Retrieval" },
+    { id: "plain", name: "plain", description: "Explain in plain English", group: "Style" },
+  ]}
+  onCommandSelect={(cmd, ctx) => setText(ctx.replace(`/${cmd.name} `))}
+  footer={<TokenMeter usage={usage} budget={128_000} className="text-xs" />}
+/>
+```
+
+Two decisions carry most of the component. **Attachments are controlled-only**:
+the composer never holds a `File`. It validates against `accept`, `maxFiles`
+and `maxFileSize`, reports the losers through `onFileRejected(file, reason)`,
+and hands the survivors to `onAttachmentsAdd` — upload, progress, retry and
+`URL.revokeObjectURL` stay with the app, because a component that guesses at
+those leaks memory and cancels the wrong request. Drag-and-drop and paste run
+the same validation, and neither is ever the only path: a visually hidden file
+input sits behind a real, focusable attach button.
+
+**`Escape` never touches the text.** It closes the command menu and nothing
+else — no clearing the draft, no stopping the stream. There is no undo for a
+destroyed prompt. Enter sends (`submitOn="mod-enter"` to invert it),
+`Shift+Enter` inserts a newline, `Cmd/Ctrl+Enter` always sends, and while the
+menu is open the arrow keys, `Home`/`End`, `Enter` and `Tab` belong to the
+menu — so `Enter` picks a command instead of sending a half-typed message.
+
+`useSlashCommands` is exported on its own for composers this one does not fit.
+It owns menu state and no text: `onSelect` hands you a context whose
+`replace(text)` is a **pure function returning a new string**, which you apply
+to your own state.
+
+```tsx
+import { useSlashCommands } from "atlas-ui/hooks";
+
+const menu = useSlashCommands({
+  commands,
+  onSelect: (cmd, ctx) => setValue(ctx.replace(`/${cmd.name} `)),
+});
+
+<textarea {...menu.getInputProps()} value={value} onChange={onChange} />;
+{menu.isOpen && <ul {...menu.getListProps()}>{/* menu.items */}</ul>}
+```
 
 The citation preview opens on hover *or* focus. Hover open/close is debounced
 so the pointer can travel from the chip to the card's link; a focus-opened
