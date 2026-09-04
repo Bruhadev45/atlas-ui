@@ -11,7 +11,13 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov"],
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/**/*.stories.tsx", "src/**/index.ts", "src/types.ts"],
+      // Storybook-only modules: stories and the decorators they share.
+      exclude: [
+        "src/**/*.stories.tsx",
+        "src/stories/decorators.tsx",
+        "src/**/index.ts",
+        "src/types.ts",
+      ],
       thresholds: { lines: 80, functions: 80, branches: 75, statements: 80 },
     },
   },

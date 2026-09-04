@@ -4,9 +4,9 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { TokenMeter } from "./token-meter";
+import { tokenBudget as budget, tokenUsage as usage } from "../../stories/fixtures";
 
-const usage = { prompt: 28_400, completion: 6_112 }; // total 34,512
-const budget = 128_000;
+// usage totals 34,512 against a 128,000-token budget.
 
 function root(container: HTMLElement): HTMLElement {
   return container.firstElementChild as HTMLElement;

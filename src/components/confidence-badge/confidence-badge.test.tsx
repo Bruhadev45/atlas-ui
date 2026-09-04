@@ -5,8 +5,7 @@ import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { ConfidenceBadge } from "./confidence-badge";
 import type { ConfidenceBadgeLabels, ConfidenceLevel } from "./confidence-badge.types";
-
-const levels: readonly ConfidenceLevel[] = ["high", "medium", "low", "insufficient"];
+import { confidenceLevels as levels } from "../../stories/fixtures";
 const variants = ["soft", "solid", "outline"] as const;
 
 describe("ConfidenceBadge rendering", () => {

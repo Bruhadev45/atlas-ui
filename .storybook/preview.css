@@ -1,0 +1,15 @@
+/* Storybook canvas: the token layer plus the utilities the components use,
+   built with preflight disabled — the same contract as dist/styles.css. */
+@import "../src/styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: hsl(var(--atlas-surface));
+  color: hsl(var(--atlas-fg));
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}

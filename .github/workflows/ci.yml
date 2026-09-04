@@ -24,6 +24,8 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
+      - name: Build Storybook
+        run: npm run build:storybook
       - name: Package health
         run: npm run check:pkg
       - name: Size budgets

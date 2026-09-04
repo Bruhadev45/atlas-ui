@@ -4,19 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { CitationChip } from "./citation-chip";
-import type { CitationSource } from "./citation-chip.types";
-
-const source: CitationSource = {
-  id: "sec-149",
-  title: "Indian Penal Code, 1860",
-  locator: "§ 149",
-  snippet: "Every member of unlawful assembly guilty of offence committed in prosecution of common object.",
-  score: 0.92,
-  scoreLabel: "fused",
-  retriever: "bm25 + InLegalBERT",
-  url: "/corpus/ipc/149",
-  meta: { Filed: "1860-10-06" },
-};
+import { citationSource as source } from "../../stories/fixtures";
 
 const name = "Citation 1: Indian Penal Code, 1860 § 149";
 

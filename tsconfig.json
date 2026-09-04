@@ -20,6 +20,7 @@
   "include": [
     "src",
     "tailwind",
+    ".storybook",
     "tsup.config.ts",
     "tailwind.build.config.ts",
     "vitest.config.ts",

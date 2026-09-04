@@ -9,7 +9,10 @@ import atlasPreset from "./tailwind/preset";
 const config = {
   presets: [atlasPreset],
   corePlugins: { preflight: false },
-  content: ["./src/**/*.{ts,tsx}"],
+  // Stories are Storybook-only: their utilities must not leak into the
+  // shipped stylesheet or its size budget (.storybook/tailwind.config.ts
+  // scans them instead).
+  content: ["./src/**/*.{ts,tsx}", "!./src/**/*.stories.tsx", "!./src/stories/**"],
 } satisfies Config;
 
 export default config;
