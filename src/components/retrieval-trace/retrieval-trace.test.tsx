@@ -4,37 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { RetrievalTrace } from "./retrieval-trace";
-import type { RetrievedChunk, RetrieverDescriptor } from "./retrieval-trace.types";
-
-const chunks: RetrievedChunk[] = [
-  {
-    key: "ipc-149",
-    score: 0.0163,
-    normalizedScore: 1,
-    title: "Indian Penal Code, 1860",
-    locator: "§ 149",
-    text: "Every member of an unlawful assembly is guilty of the offence committed in prosecution of the common object.",
-    url: "/corpus/ipc/149",
-    meta: { court: "Supreme Court", year: 1860, raw: { nested: true } },
-    contributions: [
-      { source: "bm25", rank: 0, weight: 0.6, score: 0.0098 },
-      { source: "dense", rank: 2, weight: 0.4, score: 0.0065 },
-    ],
-  },
-  {
-    key: "crpc-107",
-    score: 0.0081,
-    normalizedScore: 0.5,
-    title: "Code of Criminal Procedure, 1973",
-    text: "Security for keeping the peace in other cases.",
-    contributions: [{ source: "dense", rank: 0, weight: 0.4, score: 0.0081 }],
-  },
-];
-
-const retrievers: RetrieverDescriptor[] = [
-  { name: "bm25", label: "BM25", weight: 0.6 },
-  { name: "dense", label: "InLegalBERT", weight: 0.4 },
-];
+/* The fixture is shared with the stories so the two can never drift (SPEC 7). */
+import { retrievedChunks as chunks, retrievers } from "../../stories/fixtures";
 
 /* The component fixture is not a page, so the landmark rule does not apply. */
 const axeOptions = { rules: { region: { enabled: false } } };

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { completePartialMarkdown } from "./partial-markdown";
+/* The realistic answer the StreamingMessage stories render (SPEC section 7). */
+import { streamingAnswer } from "../../stories/fixtures";
 
 /**
  * The parser's contract is a table, because every regression in it looks like
@@ -77,6 +79,20 @@ describe("completePartialMarkdown", () => {
   it("is idempotent — repairing a repaired string changes nothing", () => {
     for (const [, input] of cases) {
       const once = completePartialMarkdown(input);
+      expect(completePartialMarkdown(once)).toBe(once);
+    }
+  });
+
+  /*
+   * The table covers the shapes; this covers the sequence. Every prefix of a
+   * real answer is an instant some consumer renders, and each one has to land
+   * on a fixed point — otherwise the repaired output would itself need
+   * repairing and the view would flicker between two renderings of one token.
+   */
+  it("repairs every prefix of a real answer to a fixed point", () => {
+    expect(completePartialMarkdown(streamingAnswer)).toBe(streamingAnswer);
+    for (let end = 0; end <= streamingAnswer.length; end += 1) {
+      const once = completePartialMarkdown(streamingAnswer.slice(0, end));
       expect(completePartialMarkdown(once)).toBe(once);
     }
   });

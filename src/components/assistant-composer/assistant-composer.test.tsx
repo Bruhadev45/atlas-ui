@@ -4,21 +4,14 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { AssistantComposer } from "./assistant-composer";
-import type { ComposerAttachment, SlashCommand } from "./assistant-composer.types";
+/* The fixture is shared with the stories so the two can never drift (SPEC 7). */
+import {
+  composerAttachments as attachments,
+  slashCommands as commands,
+} from "../../stories/fixtures";
 
 /* The component fixture is not a page, so the landmark rule does not apply. */
 const axeOptions = { rules: { region: { enabled: false } } };
-
-const commands: SlashCommand[] = [
-  { id: "cite", name: "cite", description: "Cite a specific section", group: "Retrieval" },
-  { id: "compare", name: "compare", description: "Compare two provisions", group: "Retrieval" },
-  { id: "plain", name: "plain", description: "Explain in plain English", group: "Style" },
-];
-
-const attachments: ComposerAttachment[] = [
-  { id: "a1", name: "filing.pdf", size: 24_000, status: "ready" },
-  { id: "a2", name: "rows.csv", size: 1_200, status: "uploading", progress: 0.4 },
-];
 
 function file(name: string, type = "application/pdf", bytes = 4): File {
   return new File(["x".repeat(bytes)], name, { type });

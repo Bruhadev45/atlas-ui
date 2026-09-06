@@ -202,7 +202,12 @@ describe("CitationChip hover and focus", () => {
 
   it("keeps the card open along the safe path from chip to link", async () => {
     const user = userEvent.setup();
-    render(<CitationChip index={1} source={source} openDelayMs={1} closeDelayMs={30} />);
+    /* The close delay is the budget user-event has to deliver the hover onto
+       the card before the scheduled close fires. At 30ms that budget lost to
+       scheduling jitter under a loaded runner and the test flaked; 150ms is
+       wide enough to be reliable and the wait below still outlasts it, so the
+       assertion remains "the safe path cancelled the close". */
+    render(<CitationChip index={1} source={source} openDelayMs={1} closeDelayMs={150} />);
     const chip = screen.getByRole("button", { name });
 
     await user.hover(chip);
@@ -210,7 +215,7 @@ describe("CitationChip hover and focus", () => {
     await user.unhover(chip);
     await user.hover(dialog);
 
-    await new Promise((resolve) => setTimeout(resolve, 60));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     expect(screen.getByRole("dialog")).toBeInTheDocument();
 
     await user.unhover(dialog);

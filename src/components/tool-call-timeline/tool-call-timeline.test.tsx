@@ -5,35 +5,8 @@ import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 import { ToolCallTimeline } from "./tool-call-timeline";
 import type { ToolCall } from "./tool-call-timeline.types";
-
-const calls: ToolCall[] = [
-  {
-    id: "t1",
-    name: "classify_query",
-    status: "ok",
-    durationMs: 120,
-    args: { query: "common object under s.149", apiKey: "sk-live-secret" },
-    result: { intent: "statute_lookup", jurisdiction: "IN" },
-  },
-  {
-    id: "t2",
-    name: "hybrid_retrieve",
-    status: "ok",
-    durationMs: 1_400,
-    args: { top_k: 8 },
-    children: [
-      { id: "t2a", name: "bm25_search", status: "ok", durationMs: 61, result: { hits: 3 } },
-      {
-        id: "t2b",
-        name: "dense_search",
-        status: "error",
-        durationMs: 900,
-        error: "embedding service timed out",
-      },
-    ],
-  },
-  { id: "t3", name: "draft_answer", status: "pending" },
-];
+/* The fixture is shared with the stories so the two can never drift (SPEC 7). */
+import { toolCalls as calls } from "../../stories/fixtures";
 
 /* The component fixture is not a page, so the landmark rule does not apply. */
 const axeOptions = { rules: { region: { enabled: false } } };

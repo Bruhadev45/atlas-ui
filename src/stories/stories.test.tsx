@@ -2,9 +2,13 @@ import * as React from "react";
 import { composeStories } from "@storybook/react";
 import { act, render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import * as assistantComposer from "../components/assistant-composer/assistant-composer.stories";
 import * as citationChip from "../components/citation-chip/citation-chip.stories";
 import * as confidenceBadge from "../components/confidence-badge/confidence-badge.stories";
+import * as retrievalTrace from "../components/retrieval-trace/retrieval-trace.stories";
+import * as streamingMessage from "../components/streaming-message/streaming-message.stories";
 import * as tokenMeter from "../components/token-meter/token-meter.stories";
+import * as toolCallTimeline from "../components/tool-call-timeline/tool-call-timeline.stories";
 
 /**
  * The `play` functions are the keyboard contract from SPEC section 7, written
@@ -45,6 +49,10 @@ function describeStories(
   });
 }
 
+describeStories("AssistantComposer", assistantComposer);
 describeStories("CitationChip", citationChip);
 describeStories("ConfidenceBadge", confidenceBadge);
+describeStories("RetrievalTrace", retrievalTrace);
+describeStories("StreamingMessage", streamingMessage);
 describeStories("TokenMeter", tokenMeter);
+describeStories("ToolCallTimeline", toolCallTimeline);
