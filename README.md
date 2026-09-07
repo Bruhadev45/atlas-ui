@@ -1,5 +1,8 @@
 # atlas-ui
 
+[![CI](https://github.com/Bruhadev45/atlas-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Bruhadev45/atlas-ui/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 Opinionated React + TypeScript + Tailwind components for the parts of an AI
 application interface that mainstream component libraries do not ship:
 streaming output, citations, confidence, tool traces, token budgets, retrieval
@@ -7,22 +10,45 @@ provenance, and the composer. It is deliberately **not** a design system — no
 buttons, no modals, no reset — so it composes with shadcn/ui, MUI, Mantine, or
 your own styles.
 
-**Status: all seven components implemented.**
+Seven components, no runtime dependency beyond Radix primitives, every one of
+them keyboard-operable and axe-clean in both themes.
 
-| Component | Status |
-|---|---|
-| `CitationChip` | ready |
-| `ConfidenceBadge` | ready |
-| `TokenMeter` | ready |
-| `RetrievalTrace` | ready |
-| `ToolCallTimeline` | ready |
-| `StreamingMessage` | ready |
-| `AssistantComposer` | ready |
+## Install
+
+```sh
+npm install atlas-ui
+```
+
+`react` and `react-dom` (>= 18) are peer dependencies; `tailwindcss` is an
+optional peer you only need for [Mode B](#mode-b--your-app-already-uses-tailwind).
+
+```ts
+// One import, modern bundlers:
+import { CitationChip, TokenMeter } from "atlas-ui";
+
+// Or the per-component subpath, which guarantees you ship only what you import:
+import { CitationChip } from "atlas-ui/citation-chip";
+```
+
+Then pick one of the two styling modes below — the components render unstyled
+without it.
+
+Every screenshot in this README is a real render, produced from the Storybook
+static build by `npm run screenshots`.
+
+---
+
+## CitationChip
+
+![Three CitationChips numbered inline in a grounded answer](docs/media/citation-chip.png)
+
+An inline citation marker that opens a source preview on hover *or* focus.
+Hover open/close is debounced so the pointer can travel from the chip to the
+card's link; a focus-opened preview never closes on `pointerleave`, only on
+blur or `Escape`.
 
 ```tsx
 import { CitationChip } from "atlas-ui/citation-chip";
-import { ConfidenceBadge, confidenceFromScore } from "atlas-ui/confidence-badge";
-import { TokenMeter } from "atlas-ui/token-meter";
 
 <p>
   A common object requires shared intent
@@ -40,8 +66,37 @@ import { TokenMeter } from "atlas-ui/token-meter";
     }}
   />, not mere presence.
 </p>
+```
+
+`variant` switches the marker between `numeric`, `dot` and `text`, and
+`asChild` hands rendering to your own element when the chip has to be a link.
+
+## ConfidenceBadge
+
+![A ConfidenceBadge reading "High 0.91" beneath an answer](docs/media/confidence-badge.png)
+
+A confidence level with an optional score and a calibration explainer. The four
+levels each carry their own icon shape, so the badge survives greyscale and
+colour-blind rendering; `confidenceFromScore` maps a raw score onto a level with
+thresholds you can override.
+
+```tsx
+import { ConfidenceBadge, confidenceFromScore } from "atlas-ui/confidence-badge";
 
 <ConfidenceBadge level={confidenceFromScore(0.91)} score={0.91} showScore />
+```
+
+## TokenMeter
+
+![A TokenMeter showing 36.4K of a 128K budget with a per-field breakdown](docs/media/token-meter.png)
+
+Token usage against a budget, as a real `role="meter"`. It announces threshold
+crossings once each rather than on every render, and `estimateCost()` is
+exported on its own for the places you need the number without the UI.
+
+```tsx
+import { TokenMeter } from "atlas-ui/token-meter";
+
 <TokenMeter
   usage={{ prompt: 28_400, completion: 6_112, cached: 24_000 }}
   budget={128_000}
@@ -49,10 +104,14 @@ import { TokenMeter } from "atlas-ui/token-meter";
 />
 ```
 
-Retrieval results come with their provenance intact. `fromRagfuse` maps the
-JSON of [ragfuse](https://github.com/Bruhadev45/ragfuse)'s `FusedHit` — either
-casing — onto display fields, and `RetrievalTrace` renders the ranking as an
-`<ol>` in which every hit says, in text, which retriever found it and where:
+## RetrievalTrace
+
+![A RetrievalTrace ranking two statutes, each with per-retriever badges and highlighted query terms](docs/media/retrieval-trace.png)
+
+Retrieval results with their provenance intact. `fromRagfuse` maps the JSON of
+[ragfuse](https://github.com/Bruhadev45/ragfuse)'s `FusedHit` — either casing —
+onto display fields, and `RetrievalTrace` renders the ranking as an `<ol>` in
+which every hit says, in text, which retriever found it and where:
 
 ```tsx
 import { RetrievalTrace } from "atlas-ui/retrieval-trace";
@@ -76,11 +135,15 @@ import { fromRagfuse } from "atlas-ui/utils";
 Each badge reads `bm25 · rank 1 · w 0.6`; colour is a redundant second channel,
 so a four-retriever trace stays intelligible read aloud or in greyscale.
 
-An agent's tool calls render as a nested disclosure list. Arguments and results
-are serialised through `safeStringify`, which **redacts credential-shaped keys
-by default** — a debug timeline is exactly the surface that ends up in a
-screenshot or a support ticket. `redactKeys` widens that list rather than
-replacing it; `redactKeys={[]}` is the explicit opt-out.
+## ToolCallTimeline
+
+![A ToolCallTimeline with two expanded calls, nested children, and an apiKey argument rendered as "[redacted]"](docs/media/tool-call-timeline.png)
+
+An agent's tool calls as a nested disclosure list. Arguments and results are
+serialised through `safeStringify`, which **redacts credential-shaped keys by
+default** — a debug timeline is exactly the surface that ends up in a screenshot
+or a support ticket. `redactKeys` widens that list rather than replacing it;
+`redactKeys={[]}` is the explicit opt-out.
 
 ```tsx
 import { ToolCallTimeline } from "atlas-ui/tool-call-timeline";
@@ -108,8 +171,12 @@ Every row's accessible name spells its status and duration out ("Succeeded,
 120 milliseconds"), so colour and the five status shapes are reinforcement,
 never the signal.
 
-`StreamingMessage` renders model output as it arrives. It owns no transport —
-`content` and `status` are props, so it composes with the Vercel AI SDK, a raw
+## StreamingMessage
+
+![A finished StreamingMessage with a regenerate button and a copy action](docs/media/streaming-message.png)
+
+Model output as it arrives. The component owns no transport — `content` and
+`status` are props, so it composes with the Vercel AI SDK, a raw
 `ReadableStream`, or a WebSocket without fighting any of them:
 
 ```tsx
@@ -124,6 +191,12 @@ import { StreamingMessage } from "atlas-ui/streaming-message";
   onRegenerate={reload}
 />
 ```
+
+It also ships no markdown renderer — that would be a runtime dependency and a
+choice of renderer this library has no business making. The default output is
+text, which is why the screenshot above shows `**Held:**` verbatim; pass your
+own through `renderContent(text, { status, isPartial })` and the same text
+arrives already repaired.
 
 The streaming text is deliberately **not** a live region: marking a growing
 paragraph `aria-live` makes a screen reader re-read it on every chunk. Instead
@@ -147,9 +220,12 @@ completePartialMarkdown("see [the act](htt");      // "see "
 final `content` on the transition out of `"streaming"`, so the buffer is a
 rate limiter and never a source of truth.
 
-`AssistantComposer` is the input side: a real `<form>` whose send control is a
-`<button type="submit">`, with a slash-command palette, controlled attachments
-and an autosizing textarea.
+## AssistantComposer
+
+![An AssistantComposer with two attachments, a draft, a remaining-character count and a token footer](docs/media/assistant-composer.png)
+
+The input side: a real `<form>` whose send control is a `<button type="submit">`,
+with a slash-command palette, controlled attachments and an autosizing textarea.
 
 ```tsx
 import { AssistantComposer } from "atlas-ui/assistant-composer";
@@ -201,17 +277,14 @@ const menu = useSlashCommands({
 {menu.isOpen && <ul {...menu.getListProps()}>{/* menu.items */}</ul>}
 ```
 
-The citation preview opens on hover *or* focus. Hover open/close is debounced
-so the pointer can travel from the chip to the card's link; a focus-opened
-preview never closes on `pointerleave`, only on blur or `Escape`.
-
-Prefer the per-component subpaths (`atlas-ui/confidence-badge`) — they
-guarantee you only ship what you import, in every bundler. The barrel
-(`atlas-ui`) is the convenience for modern ESM setups.
+---
 
 ## Styling — two consumption modes
 
-The library owns no global styles and ships no preflight/reset.
+The library owns no global styles and ships no preflight/reset. Every block
+element it renders zeroes the user agent's own margins locally instead, so
+dropping a component into a page with no reset does not inherit `1em`
+paragraph margins or a list bullet from the browser.
 
 ### Mode A — no Tailwind in your app
 
@@ -258,6 +331,50 @@ Known limitation: a Tailwind 3 consumer using a `prefix` cannot use Mode B
 Dark mode: add `.dark` or `data-theme="dark"` to any ancestor (usually
 `<html>`). Tokens flip in `tokens.css`; there is not a single `dark:` class in
 the components.
+
+## Bundle size
+
+Measured by `npm run size` on the committed build — minified and brotlied.
+Per-component rows exclude the shared runtime (Radix primitives, `clsx`,
+`tailwind-merge`), which the barrel row counts once:
+
+| Entry point | Size | Budget |
+|---|---|---|
+| `atlas-ui/confidence-badge` | 1.75 kB | 4 kB |
+| `atlas-ui/streaming-message` | 2.36 kB | 6 kB |
+| `atlas-ui/citation-chip` | 2.44 kB | 16 kB |
+| `atlas-ui/token-meter` | 2.73 kB | 5 kB |
+| `atlas-ui/retrieval-trace` | 3.42 kB | 9 kB |
+| `atlas-ui/tool-call-timeline` | 4.21 kB | 10 kB |
+| `atlas-ui/assistant-composer` | 5.07 kB | 10 kB |
+| `atlas-ui` (barrel, all seven **plus** the shared runtime) | 44.55 kB | 46 kB |
+| `atlas-ui/styles.css` | 3.51 kB | 12 kB |
+
+The budgets are enforced in CI, so a regression fails the build rather than
+showing up in someone else's bundle analyser.
+
+## Development
+
+```sh
+npm ci
+npm test              # vitest + jsdom + axe, with coverage thresholds
+npm run typecheck
+npm run lint
+npm run build         # tsup dual-format + the prebuilt stylesheet
+npm run check:pkg     # publint + are-the-types-wrong
+npm run size
+
+npm run storybook     # the seven components, five story kinds each
+```
+
+Every story is also composed into the vitest run, so `play` functions are
+keyboard contracts rather than documentation. To regenerate the screenshots in
+this README:
+
+```sh
+npm run build:storybook
+npm run screenshots   # needs Chrome or `npx playwright install chromium`
+```
 
 ## License
 

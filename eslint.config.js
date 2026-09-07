@@ -46,5 +46,13 @@ export default tseslint.config(
         },
       ],
     },
+  },
+  {
+    /* Maintenance scripts, not library source: the module runs in node, and the
+       callbacks handed to Playwright's page.evaluate() run in the browser. */
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: { URL: "readonly", console: "readonly", document: "readonly" },
+    },
   }
 );

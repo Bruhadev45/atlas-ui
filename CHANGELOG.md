@@ -1,6 +1,20 @@
 # Changelog
 
-## Unreleased
+## 0.1.0 — 2026-09-07
+
+First release: all seven components, both styling modes, and the Storybook that
+documents them.
+
+- Every block element the components render now zeroes the user agent's own
+  margins locally (`<p>`, `<dl>`/`<dd>`, `<pre>`) and every list its bullet and
+  inline-start padding. The library ships no preflight by design, so without
+  this a Mode A consumer inherited `1em` paragraph margins and a bullet on the
+  retriever legend straight from the browser. `src/styles/ua-reset.test.tsx`
+  pins the contract per component.
+- `docs/media/` holds one screenshot per component, generated from the
+  Storybook static build by `npm run screenshots` (`scripts/screenshot-stories.mjs`).
+  README rewritten around them, with install instructions and the measured
+  bundle-size table.
 
 - `AssistantComposer` — a real `<form>` with a submit button, an autosizing
   textarea, a slash-command combobox, controlled-only attachments validated
