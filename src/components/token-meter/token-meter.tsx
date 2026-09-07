@@ -64,12 +64,12 @@ function TokenMeterDetails(props: DetailsProps): React.JSX.Element {
   const row = (term: string, value: string) => (
     <div className="contents">
       <dt className="text-fg-muted">{term}</dt>
-      <dd className="justify-self-end tabular-nums text-fg">{value}</dd>
+      <dd className="m-0 justify-self-end tabular-nums text-fg">{value}</dd>
     </div>
   );
 
   return (
-    <dl className="grid grid-cols-[auto_auto] justify-between gap-x-4 gap-y-1">
+    <dl className="m-0 grid grid-cols-[auto_auto] justify-between gap-x-4 gap-y-1">
       {row(labels.prompt, format(usage.prompt))}
       {row(labels.completion, format(usage.completion))}
       {usage.cached != null && row(labels.cached, format(usage.cached))}

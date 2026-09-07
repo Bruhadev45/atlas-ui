@@ -25,16 +25,16 @@ export function CitationPreview(props: CitationPreviewProps): React.JSX.Element 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-0.5">
-        <p id={headingId} className="text-sm font-medium leading-snug text-fg">
+        <p id={headingId} className="m-0 text-sm font-medium leading-snug text-fg">
           {source.title}
         </p>
         {source.locator && (
-          <p className="text-xs leading-snug text-fg-muted">{source.locator}</p>
+          <p className="m-0 text-xs leading-snug text-fg-muted">{source.locator}</p>
         )}
       </div>
 
       {source.snippet && (
-        <p className="border-l-2 border-border pl-2 text-xs leading-relaxed text-fg-muted">
+        <p className="m-0 border-l-2 border-border pl-2 text-xs leading-relaxed text-fg-muted">
           {source.snippet}
         </p>
       )}
@@ -58,11 +58,11 @@ export function CitationPreview(props: CitationPreviewProps): React.JSX.Element 
       )}
 
       {metaRows.length > 0 && (
-        <dl className="grid grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 text-xs">
+        <dl className="m-0 grid grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 text-xs">
           {metaRows.map(([key, value]) => (
             <div key={key} className="contents">
               <dt className="text-fg-subtle">{key}</dt>
-              <dd className="text-fg-muted">{value}</dd>
+              <dd className="m-0 text-fg-muted">{value}</dd>
             </div>
           ))}
         </dl>

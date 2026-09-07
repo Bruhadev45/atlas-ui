@@ -233,14 +233,14 @@ export const ToolCallTimeline = React.forwardRef<HTMLDivElement, ToolCallTimelin
         onKeyDown={handleKeyDown}
       >
         {calls.length === 0 ? (
-          (emptyState ?? <p className="text-sm text-fg-subtle">{labels.empty}</p>)
+          (emptyState ?? <p className="m-0 text-sm text-fg-subtle">{labels.empty}</p>)
         ) : (
           <ol
             /* Ordered: execution order is meaningful. The explicit role is for
                Safari + VoiceOver, which drop list semantics when list-style
                is none. */
             role="list"
-            className="flex list-none flex-col gap-0.5"
+            className="m-0 flex list-none flex-col gap-0.5 p-0"
           >
             {calls.map((call) => (
               <ToolCallNode key={call.id} call={call} depth={0} ctx={ctx} />

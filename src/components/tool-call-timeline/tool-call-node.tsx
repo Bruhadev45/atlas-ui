@@ -19,7 +19,7 @@ const triggerClass =
   "flex w-full items-center rounded-sm text-left font-medium text-fg hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
 
 const codeClass =
-  "max-h-64 overflow-x-auto overflow-y-auto rounded-sm bg-surface-sunken p-2 font-mono text-xs leading-relaxed text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "m-0 max-h-64 overflow-x-auto overflow-y-auto rounded-sm bg-surface-sunken p-2 font-mono text-xs leading-relaxed text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 const linkButtonClass =
   "self-start rounded-sm text-xs font-medium text-accent underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
@@ -95,7 +95,7 @@ function SerializedBlock(props: SerializedBlockProps): React.JSX.Element {
 function Section(props: { title: string; children: React.ReactNode }): React.JSX.Element {
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-xs font-medium uppercase tracking-wide text-fg-subtle">{props.title}</p>
+      <p className="m-0 text-xs font-medium uppercase tracking-wide text-fg-subtle">{props.title}</p>
       {props.children}
     </div>
   );
@@ -183,7 +183,7 @@ export function ToolCallNode(props: ToolCallNodeProps): React.JSX.Element {
       {rowInner}
     </button>
   ) : (
-    <p className={cn("flex w-full items-center font-medium text-fg", rowDensityClass[ctx.density])}>
+    <p className={cn("m-0 flex w-full items-center font-medium text-fg", rowDensityClass[ctx.density])}>
       {rowInner}
     </p>
   );
@@ -194,11 +194,11 @@ export function ToolCallNode(props: ToolCallNodeProps): React.JSX.Element {
       {resultNode != null && <Section title={labels.result}>{resultNode}</Section>}
       {call.error !== undefined && (
         <Section title={labels.error}>
-          <p className="text-xs leading-relaxed text-danger">{call.error}</p>
+          <p className="m-0 text-xs leading-relaxed text-danger">{call.error}</p>
         </Section>
       )}
       {children.length > 0 && (
-        <ol role="list" className="flex list-none flex-col gap-0.5 border-l border-border pl-2">
+        <ol role="list" className="m-0 flex list-none flex-col gap-0.5 border-l border-border p-0 pl-2">
           {foldChildren ? (
             <li>
               {/* Never a dead end: the fold row raises maxDepth locally. */}

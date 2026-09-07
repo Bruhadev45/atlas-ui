@@ -126,7 +126,7 @@ export function ChunkRow(props: ChunkRowProps): React.JSX.Element {
   if (renderChunk) body = renderChunk(chunk, { rank, expanded, selected });
   else if (!expanded && chunk.text) {
     body = (
-      <p className="leading-relaxed text-fg-muted">
+      <p className="m-0 leading-relaxed text-fg-muted">
         {highlightTerms(truncate(chunk.text, maxSnippetChars), terms)}
       </p>
     );
@@ -172,7 +172,7 @@ export function ChunkRow(props: ChunkRowProps): React.JSX.Element {
               </button>
             </CollapsiblePrimitive.Trigger>
 
-            <p className="flex items-center gap-2 text-xs text-fg-subtle">
+            <p className="m-0 flex items-center gap-2 text-xs text-fg-subtle">
               <span className="tabular-nums">
                 {labels.score} {scoreText(chunk, normalized, scoreDisplay)}
               </span>
@@ -188,7 +188,7 @@ export function ChunkRow(props: ChunkRowProps): React.JSX.Element {
             </p>
 
             {showProvenance && contributions.length > 0 && (
-              <p className="flex flex-wrap items-center gap-1">
+              <p className="m-0 flex flex-wrap items-center gap-1">
                 <span className="sr-only">{labels.retrievedBy}: </span>
                 {contributions.map((contribution) => (
                   <ContributionBadge
@@ -218,11 +218,11 @@ export function ChunkRow(props: ChunkRowProps): React.JSX.Element {
               </div>
             )}
             {meta.length > 0 && (
-              <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-0.5 text-xs">
+              <dl className="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-0.5 text-xs">
                 {meta.map(([key, value]) => (
                   <React.Fragment key={key}>
                     <dt className="text-fg-subtle">{key}</dt>
-                    <dd className="truncate text-fg-muted">{value}</dd>
+                    <dd className="m-0 truncate text-fg-muted">{value}</dd>
                   </React.Fragment>
                 ))}
               </dl>

@@ -29,7 +29,7 @@ export interface RetrieverLegendProps {
 export function RetrieverLegend(props: RetrieverLegendProps): React.JSX.Element {
   const { id, retrievers, labels } = props;
   return (
-    <ul id={id} className="flex flex-wrap items-center gap-1.5">
+    <ul id={id} className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0">
       {retrievers.map((retriever) => (
         <li key={retriever.name}>
           <span className={badgeClass} style={colorVars(retriever.color)}>

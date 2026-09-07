@@ -93,7 +93,7 @@ export const RetrievalTrace = React.forwardRef<HTMLDivElement, RetrievalTracePro
         className={cn("flex flex-col gap-2", className)}
       >
         {query && (
-          <p className="text-xs leading-snug text-fg-muted">
+          <p className="m-0 text-xs leading-snug text-fg-muted">
             <span className="sr-only">Query: </span>
             {query}
           </p>
@@ -102,14 +102,14 @@ export const RetrievalTrace = React.forwardRef<HTMLDivElement, RetrievalTracePro
         {showLegend && <RetrieverLegend id={legendId} retrievers={legend} labels={labels} />}
 
         {chunks.length === 0 ? (
-          (emptyState ?? <p className="text-sm text-fg-subtle">{labels.empty}</p>)
+          (emptyState ?? <p className="m-0 text-sm text-fg-subtle">{labels.empty}</p>)
         ) : (
           <ol
             /* Explicit role: Safari + VoiceOver drop list semantics when
                list-style is none, which would discard the ranking. */
             role="list"
             aria-describedby={showLegend ? legendId : undefined}
-            className="flex list-none flex-col gap-2"
+            className="m-0 flex list-none flex-col gap-2 p-0"
           >
             {chunks.map((chunk, index) => (
               <ChunkRow

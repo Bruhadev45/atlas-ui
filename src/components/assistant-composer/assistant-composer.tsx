@@ -275,7 +275,7 @@ export const AssistantComposer = React.forwardRef<HTMLFormElement, AssistantComp
           }
         >
           {attachmentsEnabled && items.length > 0 && (
-            <ul className="flex list-none flex-wrap gap-1.5">
+            <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
               {items.map((attachment) => (
                 <AttachmentChip
                   key={attachment.id}
