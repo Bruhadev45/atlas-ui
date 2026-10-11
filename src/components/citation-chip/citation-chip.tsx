@@ -16,7 +16,7 @@ const defaultLabels: CitationChipLabels = {
 /* Static lookup maps only (SPEC section 4.3). */
 
 const toneClass: Record<NonNullable<CitationChipProps["tone"]>, string> = {
-  accent: "border-accent/25 bg-accent/12 text-accent hover:bg-accent/20",
+  accent: "border-accent/25 bg-accent/10 text-accent hover:bg-accent/20",
   neutral: "border-border bg-surface-sunken text-fg-muted hover:bg-surface-raised",
 };
 
@@ -33,10 +33,10 @@ const dotToneClass: Record<NonNullable<CitationChipProps["tone"]>, string> = {
 
 /* align-super + a sub-em size so chips do not disturb prose line-height. */
 const chipBaseClass =
-  "inline-flex select-none items-center justify-center rounded-sm border align-super text-[0.72em] font-medium leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
+  "inline-flex select-none items-center justify-center rounded-sm border border-solid align-super text-[0.72em] font-medium leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
 
 const previewBaseClass =
-  "z-50 w-72 max-w-[calc(100vw-2rem)] rounded-lg border border-border bg-surface-raised p-3 text-fg shadow-lg focus-visible:outline-none";
+  "z-50 w-72 max-w-[calc(100vw-2rem)] rounded-lg border border-solid border-border bg-surface-raised p-3 text-fg shadow-lg focus-visible:outline-none";
 
 /** Why the preview is open. Only "activate" takes focus into the card. */
 type OpenReason = "hover" | "focus" | "activate";

@@ -24,7 +24,7 @@ const rankPillClass =
   "mt-px inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-sm bg-surface-sunken px-1 text-xs font-medium tabular-nums text-fg-subtle";
 
 const triggerClass =
-  "flex w-full items-center gap-1.5 rounded-sm text-left font-medium text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
+  "flex w-full items-center gap-1.5 rounded-sm border-0 bg-transparent text-left font-medium text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
 
 function ChevronIcon(): React.JSX.Element {
   return (
@@ -136,7 +136,7 @@ export function ChunkRow(props: ChunkRowProps): React.JSX.Element {
     <li
       data-selected={selected || undefined}
       className={cn(
-        "flex flex-col rounded-lg border border-border bg-surface",
+        "flex flex-col rounded-lg border border-solid border-border bg-surface",
         rowDensityClass[density],
         selected && "ring-2 ring-accent/40"
       )}

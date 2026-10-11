@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+Dark-mode visual QA: every story rendered in both themes, in jsdom and in a
+real browser with axe colour-contrast, and every defect found fixed.
+
+- Buttons and the composer textarea now set their own background, text colour
+  and border from tokens. Without preflight they kept the browser's
+  `ButtonFace` grey and outset border, which ignore `data-theme`: a
+  ToolCallTimeline row read near-white text on light grey (1.05:1) in dark mode.
+- Every `border` now carries `border-solid`. No preflight sets a border style,
+  so `border border-border` on a `div`/`span`/`li` drew nothing — the
+  RetrievalTrace row outline, the composer shell, the popover cards and the
+  badge outlines were all invisible in both themes.
+- `/12` and `/8` tints are now `/10`. Tailwind 3.4 only generates its opacity
+  scale, so `bg-accent/12`, `bg-conf-*/12` and `bg-danger/8` emitted no CSS.
+- Token values: the retriever palette gains dark-theme values (it had none, so
+  dark badges failed contrast at 3.0–3.4:1), and the light `fg-subtle`,
+  `accent`, `conf-*` and `retriever-1/3/4` values darken to clear 4.5:1 on the
+  surfaces and tints they are used on.
+- `src/stories/stories.test.tsx` runs every story under both themes and fails
+  on palette colours, off-scale opacity steps, style-less borders and controls
+  that keep user-agent colours.
+- `npm run screenshots` also writes `docs/dark/`, one dark render per component.
+
 ## 0.1.0 — 2026-09-07
 
 First release: all seven components, both styling modes, and the Storybook that

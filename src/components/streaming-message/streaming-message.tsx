@@ -162,7 +162,7 @@ export const StreamingMessage = React.forwardRef<HTMLDivElement, StreamingMessag
         className={cn("text-fg leading-relaxed", className)}
       >
         {showError ? (
-          <div className="rounded border border-danger/30 bg-danger/8 px-3 py-2 text-sm text-danger">
+          <div className="rounded border border-solid border-danger/30 bg-danger/10 px-3 py-2 text-sm text-danger">
             {error}
           </div>
         ) : (

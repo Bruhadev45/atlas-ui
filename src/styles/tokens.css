@@ -1,5 +1,5 @@
 /* atlas-ui token layer. Colours are space-separated HSL channels, not finished
-   colours, so Tailwind's <alpha-value> works (bg-conf-high/12 becomes a real
+   colours, so Tailwind's <alpha-value> works (bg-conf-high/10 becomes a real
    translucent fill). Shipped verbatim as dist/tokens.css. */
 
 :root {
@@ -11,14 +11,14 @@
   /* foreground */
   --atlas-fg:              222 47% 11%;
   --atlas-fg-muted:        215 16% 40%;
-  --atlas-fg-subtle:       215 14% 55%;
+  --atlas-fg-subtle:       215 16% 44%;
 
   /* lines & focus */
   --atlas-border:          220 13% 88%;
   --atlas-ring:            221 83% 53%;
 
   /* brand */
-  --atlas-accent:          221 83% 53%;
+  --atlas-accent:          221 83% 50%;
   --atlas-accent-fg:       0 0% 100%;
 
   /* status */
@@ -28,16 +28,16 @@
   --atlas-info:            199 89% 40%;
 
   /* confidence (own scale: must stay distinguishable from status colours) */
-  --atlas-conf-high:         160 84% 28%;
-  --atlas-conf-medium:        38 92% 38%;
-  --atlas-conf-low:           14 85% 47%;
-  --atlas-conf-insufficient: 215 16% 47%;
+  --atlas-conf-high:         160 84% 25%;
+  --atlas-conf-medium:        36 92% 30%;
+  --atlas-conf-low:           14 80% 40%;
+  --atlas-conf-insufficient: 215 18% 42%;
 
   /* retriever default palette, overridable per RetrieverDescriptor.color */
-  --atlas-retriever-1: 221 83% 53%;
+  --atlas-retriever-1: 221 83% 50%;
   --atlas-retriever-2: 271 76% 53%;
-  --atlas-retriever-3: 170 70% 36%;
-  --atlas-retriever-4:  25 85% 48%;
+  --atlas-retriever-3: 170 75% 26%;
+  --atlas-retriever-4:  25 90% 36%;
 
   /* geometry & motion */
   --atlas-radius:       0.5rem;
@@ -72,6 +72,11 @@
   --atlas-conf-medium:        38 90% 58%;
   --atlas-conf-low:           14 88% 62%;
   --atlas-conf-insufficient: 215 16% 62%;
+
+  --atlas-retriever-1: 217 91% 65%;
+  --atlas-retriever-2: 271 91% 72%;
+  --atlas-retriever-3: 170 60% 50%;
+  --atlas-retriever-4:  25 90% 62%;
 }
 
 /* System preference, only when the app has not pinned a theme. */
@@ -100,6 +105,11 @@
     --atlas-conf-medium:        38 90% 58%;
     --atlas-conf-low:           14 88% 62%;
     --atlas-conf-insufficient: 215 16% 62%;
+
+  --atlas-retriever-1: 217 91% 65%;
+  --atlas-retriever-2: 271 91% 72%;
+  --atlas-retriever-3: 170 60% 50%;
+  --atlas-retriever-4:  25 90% 62%;
   }
 }
 

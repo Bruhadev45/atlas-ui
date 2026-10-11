@@ -68,7 +68,7 @@ describe("ConfidenceBadge rendering", () => {
     const { container } = render(<ConfidenceBadge level="high" variant={variant} />);
     const root = container.firstElementChild as HTMLElement;
     const expected: Record<(typeof variants)[number], string> = {
-      soft: "bg-conf-high/12",
+      soft: "bg-conf-high/10",
       solid: "bg-conf-high",
       outline: "border-conf-high",
     };

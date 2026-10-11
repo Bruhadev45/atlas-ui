@@ -23,7 +23,7 @@ export function CommandMenu(props: CommandMenuProps): React.ReactElement {
     <ul
       {...menu.getListProps()}
       aria-label={labels.commands}
-      className="absolute bottom-full left-0 z-10 mb-1 mt-0 max-h-64 w-full list-none overflow-y-auto rounded-lg border border-border bg-surface-raised p-1 shadow-lg"
+      className="absolute bottom-full left-0 z-10 mb-1 mt-0 max-h-64 w-full list-none overflow-y-auto rounded-lg border border-solid border-border bg-surface-raised p-1 shadow-lg"
     >
       {items.length === 0 && (
         /* Not an option: an empty listbox with a message is announced as
@@ -53,7 +53,7 @@ export function CommandMenu(props: CommandMenuProps): React.ReactElement {
               {...menu.getItemProps(command, index)}
               className={cn(
                 "flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm text-fg",
-                active && "bg-accent/12",
+                active && "bg-accent/10",
                 command.disabled && "cursor-not-allowed opacity-50"
               )}
             >

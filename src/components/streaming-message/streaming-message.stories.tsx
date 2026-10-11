@@ -117,7 +117,7 @@ export const Realistic: Story = {
     actions: (
       <button
         type="button"
-        className="rounded-sm border border-border px-2 py-1 text-xs text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="rounded-sm border border-solid border-border bg-transparent px-2 py-1 text-xs text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         Copy
       </button>

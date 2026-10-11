@@ -41,7 +41,7 @@ export function AttachmentChip(props: AttachmentChipProps): React.ReactElement {
     <li
       data-status={status}
       className={cn(
-        "flex max-w-[16rem] items-center gap-2 rounded border border-border bg-surface-sunken px-2 py-1 text-xs text-fg-muted",
+        "flex max-w-[16rem] items-center gap-2 rounded border border-solid border-border bg-surface-sunken px-2 py-1 text-xs text-fg-muted",
         status === "error" && "border-danger/30 text-danger"
       )}
     >
@@ -82,7 +82,7 @@ export function AttachmentChip(props: AttachmentChipProps): React.ReactElement {
           disabled={disabled}
           aria-label={fill(labels.removeAttachment, "{name}", attachment.name)}
           onClick={() => onRemove(attachment.id)}
-          className="ml-auto shrink-0 rounded px-1 text-fg-subtle transition-colors hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+          className="ml-auto shrink-0 rounded border-0 bg-transparent px-1 text-fg-subtle transition-colors hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
         >
           <span aria-hidden="true">&times;</span>
         </button>

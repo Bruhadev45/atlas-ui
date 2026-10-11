@@ -16,13 +16,13 @@ const rowDensityClass: Record<Density, string> = {
 };
 
 const triggerClass =
-  "flex w-full items-center rounded-sm text-left font-medium text-fg hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
+  "flex w-full items-center rounded-sm border-0 bg-transparent text-left font-medium text-fg hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
 
 const codeClass =
   "m-0 max-h-64 overflow-x-auto overflow-y-auto rounded-sm bg-surface-sunken p-2 font-mono text-xs leading-relaxed text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 const linkButtonClass =
-  "self-start rounded-sm text-xs font-medium text-accent underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
+  "self-start rounded-sm border-0 bg-transparent text-xs font-medium text-accent underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-surface";
 
 function ChevronIcon(): React.JSX.Element {
   return (
@@ -198,7 +198,7 @@ export function ToolCallNode(props: ToolCallNodeProps): React.JSX.Element {
         </Section>
       )}
       {children.length > 0 && (
-        <ol role="list" className="m-0 flex list-none flex-col gap-0.5 border-l border-border p-0 pl-2">
+        <ol role="list" className="m-0 flex list-none flex-col gap-0.5 border-0 border-l border-solid border-border p-0 pl-2">
           {foldChildren ? (
             <li>
               {/* Never a dead end: the fold row raises maxDepth locally. */}

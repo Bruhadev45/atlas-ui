@@ -31,7 +31,7 @@ const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
 
 const triggerClass = cn(
-  "shrink-0 rounded border border-border px-2 py-0.5 text-xs text-fg-muted hover:bg-surface-raised",
+  "shrink-0 rounded border border-solid border-border bg-transparent px-2 py-0.5 text-xs text-fg-muted hover:bg-surface-raised",
   focusRing
 );
 

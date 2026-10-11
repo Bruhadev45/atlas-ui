@@ -503,7 +503,7 @@ All array-valued props are `readonly` (`readonly ToolCall[]`). Mutable arrays ar
 
 ### 4.1 Token layer (`src/styles/tokens.css`)
 
-Colours are stored as **space-separated HSL channels**, not finished colours, so Tailwind's `<alpha-value>` works (`bg-conf-high/12` becomes a real translucent fill). This is the only reason to store channels rather than `oklch(...)` strings; oklch channels would work identically if preferred, but HSL is the most portable across Tailwind 3.4 and 4.
+Colours are stored as **space-separated HSL channels**, not finished colours, so Tailwind's `<alpha-value>` works (`bg-conf-high/10` becomes a real translucent fill). This is the only reason to store channels rather than `oklch(...)` strings; oklch channels would work identically if preferred, but HSL is the most portable across Tailwind 3.4 and 4.
 
 ```css
 /* dist/tokens.css */
@@ -516,14 +516,14 @@ Colours are stored as **space-separated HSL channels**, not finished colours, so
   /* foreground */
   --atlas-fg:              222 47% 11%;
   --atlas-fg-muted:        215 16% 40%;
-  --atlas-fg-subtle:       215 14% 55%;
+  --atlas-fg-subtle:       215 16% 44%;
 
   /* lines & focus */
   --atlas-border:          220 13% 88%;
   --atlas-ring:            221 83% 53%;
 
   /* brand */
-  --atlas-accent:          221 83% 53%;
+  --atlas-accent:          221 83% 50%;
   --atlas-accent-fg:       0 0% 100%;
 
   /* status */
@@ -533,16 +533,16 @@ Colours are stored as **space-separated HSL channels**, not finished colours, so
   --atlas-info:            199 89% 40%;
 
   /* confidence (own scale: must stay distinguishable from status colours) */
-  --atlas-conf-high:         160 84% 28%;
-  --atlas-conf-medium:        38 92% 38%;
-  --atlas-conf-low:           14 85% 47%;
-  --atlas-conf-insufficient: 215 16% 47%;
+  --atlas-conf-high:         160 84% 25%;
+  --atlas-conf-medium:        36 92% 30%;
+  --atlas-conf-low:           14 80% 40%;
+  --atlas-conf-insufficient: 215 18% 42%;
 
   /* retriever default palette, overridable per RetrieverDescriptor.color */
-  --atlas-retriever-1: 221 83% 53%;
+  --atlas-retriever-1: 221 83% 50%;
   --atlas-retriever-2: 271 76% 53%;
-  --atlas-retriever-3: 170 70% 36%;
-  --atlas-retriever-4:  25 85% 48%;
+  --atlas-retriever-3: 170 75% 26%;
+  --atlas-retriever-4:  25 90% 36%;
 
   /* geometry & motion */
   --atlas-radius:       0.5rem;
@@ -577,6 +577,11 @@ Colours are stored as **space-separated HSL channels**, not finished colours, so
   --atlas-conf-medium:        38 90% 58%;
   --atlas-conf-low:           14 88% 62%;
   --atlas-conf-insufficient: 215 16% 62%;
+
+  --atlas-retriever-1: 217 91% 65%;
+  --atlas-retriever-2: 271 91% 72%;
+  --atlas-retriever-3: 170 60% 50%;
+  --atlas-retriever-4:  25 90% 62%;
 }
 
 /* System preference, only when the app has not pinned a theme. */
@@ -638,10 +643,10 @@ Tailwind extracts classes by scanning source text. A library consumed in Tailwin
 
 // REQUIRED — static lookup map, every literal present in the bundle
 const levelClass: Record<ConfidenceLevel, string> = {
-  high:         "text-conf-high bg-conf-high/12 border-conf-high/25",
-  medium:       "text-conf-medium bg-conf-medium/12 border-conf-medium/25",
-  low:          "text-conf-low bg-conf-low/12 border-conf-low/25",
-  insufficient: "text-conf-insufficient bg-conf-insufficient/12 border-conf-insufficient/25",
+  high:         "text-conf-high bg-conf-high/10 border-conf-high/25",
+  medium:       "text-conf-medium bg-conf-medium/10 border-conf-medium/25",
+  low:          "text-conf-low bg-conf-low/10 border-conf-low/25",
+  insufficient: "text-conf-insufficient bg-conf-insufficient/10 border-conf-insufficient/25",
 };
 <span className={cn("...", levelClass[level], className)} />
 ```
@@ -864,7 +869,7 @@ The critical decision: **the streaming text container is not a live region.** Ma
 
 #### Token usage
 
-`text-fg`, `leading-relaxed`, code blocks `bg-surface-sunken text-fg`, `rounded`, buttons `border border-border text-fg-muted hover:bg-surface-raised`, error region `text-danger border-danger/30 bg-danger/8`, caret `hsl(var(--atlas-fg) / 0.75)`.
+`text-fg`, `leading-relaxed`, code blocks `bg-surface-sunken text-fg`, `rounded`, buttons `border border-border text-fg-muted hover:bg-surface-raised`, error region `text-danger border-danger/30 bg-danger/10`, caret `hsl(var(--atlas-fg) / 0.75)`.
 
 #### Usage
 
@@ -1039,7 +1044,7 @@ The hover and focus interactions both funnel into the **same** `setOpen` call, s
 
 #### Token usage
 
-Chip: `bg-accent/12 text-accent border border-accent/25 hover:bg-accent/20` (or `fg-muted`/`border` for `tone="neutral"`). Card: `bg-surface-raised text-fg border border-border shadow-lg rounded-lg`. Score bar: `bg-accent` on `bg-surface-sunken`. Retriever pill: `text-fg-subtle bg-surface-sunken`.
+Chip: `bg-accent/10 text-accent border border-accent/25 hover:bg-accent/20` (or `fg-muted`/`border` for `tone="neutral"`). Card: `bg-surface-raised text-fg border border-border shadow-lg rounded-lg`. Score bar: `bg-accent` on `bg-surface-sunken`. Retriever pill: `text-fg-subtle bg-surface-sunken`.
 
 #### Usage
 
@@ -1194,7 +1199,7 @@ Presentation is stateless. Only the calibration disclosure is stateful, hybrid v
 
 #### Token usage
 
-`soft`: `bg-conf-{level}/12 text-conf-{level} border border-conf-{level}/25`. `solid`: `bg-conf-{level} text-surface`. `outline`: `border border-conf-{level} text-conf-{level}`. All via a static lookup map (§4.3). The `/12` and `/25` alpha modifiers are exactly why colours are stored as HSL channels (§4.1).
+`soft`: `bg-conf-{level}/10 text-conf-{level} border border-conf-{level}/25`. `solid`: `bg-conf-{level} text-surface`. `outline`: `border border-conf-{level} text-conf-{level}`. All via a static lookup map (§4.3). The `/10` and `/25` alpha modifiers are exactly why colours are stored as HSL channels (§4.1).
 
 #### Usage
 
@@ -2057,7 +2062,7 @@ The hook owns menu state only. It never owns the textarea value: `onSelect` rece
 
 #### Token usage
 
-Shell `bg-surface border border-border rounded-lg focus-within:ring-2 focus-within:ring-ring`; drag-active `ring-2 ring-accent border-accent bg-accent/5`. Textarea `bg-transparent text-fg placeholder:text-fg-subtle resize-none`. Send `bg-accent text-accent-fg disabled:opacity-50`. Stop `border border-border text-fg-muted`. Menu `bg-surface-raised border border-border shadow-lg rounded-lg`; active option `bg-accent/12 text-fg`. Chips `bg-surface-sunken text-fg-muted border border-border`; error `text-danger border-danger/30`.
+Shell `bg-surface border border-border rounded-lg focus-within:ring-2 focus-within:ring-ring`; drag-active `ring-2 ring-accent border-accent bg-accent/5`. Textarea `bg-transparent text-fg placeholder:text-fg-subtle resize-none`. Send `bg-accent text-accent-fg disabled:opacity-50`. Stop `border border-border text-fg-muted`. Menu `bg-surface-raised border border-border shadow-lg rounded-lg`; active option `bg-accent/10 text-fg`. Chips `bg-surface-sunken text-fg-muted border border-border`; error `text-danger border-danger/30`.
 
 #### Usage
 

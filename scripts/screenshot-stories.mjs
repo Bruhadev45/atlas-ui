@@ -1,7 +1,7 @@
 /**
- * Regenerates the component screenshots in docs/media/ from the Storybook
- * static build, so every image in the README is a real render of the shipped
- * component rather than a hand-drawn mock.
+ * Regenerates the component screenshots in docs/media/ (light) and docs/dark/
+ * from the Storybook static build, so every image in the README is a real
+ * render of the shipped component rather than a hand-drawn mock.
  *
  *   npm run build:storybook && npm run screenshots
  *
@@ -18,7 +18,15 @@ import { chromium } from "playwright-core";
 
 const ROOT = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const STATIC_DIR = join(ROOT, "storybook-static");
-const OUT_DIR = join(ROOT, "docs", "media");
+
+/**
+ * The dark set flips the same `theme` global the Storybook toolbar does, which
+ * sets `data-theme` on <html> — the switch consumers use (SPEC section 7).
+ */
+const THEMES = [
+  { theme: "light", dir: join("docs", "media") },
+  { theme: "dark", dir: join("docs", "dark") },
+];
 
 /**
  * One image per component (SPEC section 12). Every entry points at that
@@ -84,35 +92,44 @@ async function main() {
   if (!(await stat(STATIC_DIR).catch(() => null))) {
     throw new Error(`${STATIC_DIR} is missing — run \`npm run build:storybook\` first.`);
   }
-  await mkdir(OUT_DIR, { recursive: true });
+  for (const { dir } of THEMES) await mkdir(join(ROOT, dir), { recursive: true });
 
   const { server, port } = await serveStatic(STATIC_DIR);
   const browser = await launchBrowser();
   try {
-    for (const shot of SHOTS) {
-      const context = await browser.newContext({
-        viewport: { width: shot.width, height: 900 },
-        deviceScaleFactor: 2,
-        reducedMotion: "reduce",
-        colorScheme: "light",
-      });
-      const page = await context.newPage();
-      const url = `http://127.0.0.1:${port}/iframe.html?id=${shot.id}&viewMode=story`;
-      await page.goto(url, { waitUntil: "networkidle" });
-      await page.waitForSelector("#storybook-root > *", { state: "attached" });
-      await page.evaluate(() => document.fonts.ready);
-      // The caret and the running-tool pulse are time-dependent: freeze them so
-      // a rerun produces the same bytes and the diff stays meaningful.
-      await page.addStyleTag({
-        content: "*, *::before, *::after { animation: none !important; transition: none !important; }",
-      });
-      await page.locator("body").screenshot({ path: join(OUT_DIR, shot.out) });
-      await context.close();
-      console.log(`docs/media/${shot.out}  <-  ${shot.id}`);
+    for (const { theme, dir } of THEMES) {
+      for (const shot of SHOTS) {
+        await capture(browser, port, shot, theme, join(dir, shot.out));
+      }
     }
   } finally {
     await browser.close();
     server.close();
+  }
+}
+
+async function capture(browser, port, shot, theme, out) {
+  const context = await browser.newContext({
+    viewport: { width: shot.width, height: 900 },
+    deviceScaleFactor: 2,
+    reducedMotion: "reduce",
+    colorScheme: theme,
+  });
+  try {
+    const page = await context.newPage();
+    const url = `http://127.0.0.1:${port}/iframe.html?id=${shot.id}&viewMode=story&globals=theme:${theme}`;
+    await page.goto(url, { waitUntil: "networkidle" });
+    await page.waitForSelector("#storybook-root > *", { state: "attached" });
+    await page.evaluate(() => document.fonts.ready);
+    // The caret and the running-tool pulse are time-dependent: freeze them so
+    // a rerun produces the same bytes and the diff stays meaningful.
+    await page.addStyleTag({
+      content: "*, *::before, *::after { animation: none !important; transition: none !important; }",
+    });
+    await page.locator("body").screenshot({ path: join(ROOT, out) });
+    console.log(`${out}  <-  ${shot.id} (${theme})`);
+  } finally {
+    await context.close();
   }
 }
 

@@ -24,25 +24,25 @@ const defaultLabels: ConfidenceBadgeLabels = {
    complete string literal in dist so Tailwind Mode B can extract it. */
 
 const softClass: Record<ConfidenceLevel, string> = {
-  high: "border border-conf-high/25 bg-conf-high/12 text-conf-high",
-  medium: "border border-conf-medium/25 bg-conf-medium/12 text-conf-medium",
-  low: "border border-conf-low/25 bg-conf-low/12 text-conf-low",
+  high: "border border-solid border-conf-high/25 bg-conf-high/10 text-conf-high",
+  medium: "border border-solid border-conf-medium/25 bg-conf-medium/10 text-conf-medium",
+  low: "border border-solid border-conf-low/25 bg-conf-low/10 text-conf-low",
   insufficient:
-    "border border-conf-insufficient/25 bg-conf-insufficient/12 text-conf-insufficient",
+    "border border-solid border-conf-insufficient/25 bg-conf-insufficient/10 text-conf-insufficient",
 };
 
 const solidClass: Record<ConfidenceLevel, string> = {
-  high: "border border-transparent bg-conf-high text-surface",
-  medium: "border border-transparent bg-conf-medium text-surface",
-  low: "border border-transparent bg-conf-low text-surface",
-  insufficient: "border border-transparent bg-conf-insufficient text-surface",
+  high: "border border-solid border-transparent bg-conf-high text-surface",
+  medium: "border border-solid border-transparent bg-conf-medium text-surface",
+  low: "border border-solid border-transparent bg-conf-low text-surface",
+  insufficient: "border border-solid border-transparent bg-conf-insufficient text-surface",
 };
 
 const outlineClass: Record<ConfidenceLevel, string> = {
-  high: "border border-conf-high text-conf-high",
-  medium: "border border-conf-medium text-conf-medium",
-  low: "border border-conf-low text-conf-low",
-  insufficient: "border border-conf-insufficient text-conf-insufficient",
+  high: "border border-solid border-conf-high text-conf-high",
+  medium: "border border-solid border-conf-medium text-conf-medium",
+  low: "border border-solid border-conf-low text-conf-low",
+  insufficient: "border border-solid border-conf-insufficient text-conf-insufficient",
 };
 
 const variantClass: Record<
@@ -70,13 +70,13 @@ const focusRing =
 /* WCAG 2.2 SC 2.5.8: the info button keeps a 24x24 CSS px hit target even at
    size="sm"; negative margin stops the padded target inflating the badge. */
 const infoButtonClass = cn(
-  "-my-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
+  "-my-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-0 bg-transparent text-inherit",
   "hover:bg-surface-raised hover:text-fg",
   focusRing
 );
 
 const calibrationContentClass =
-  "z-50 max-w-72 rounded border border-border bg-surface-raised px-3 py-2 text-xs leading-relaxed text-fg shadow-md";
+  "z-50 max-w-72 rounded border border-solid border-border bg-surface-raised px-3 py-2 text-xs leading-relaxed text-fg shadow-md";
 
 function formatScore(score: number): string {
   return score.toFixed(2);

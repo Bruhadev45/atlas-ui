@@ -8,7 +8,7 @@ import type { RetrievalTraceLabels, RetrieverContribution } from "./retrieval-tr
 /* One class string for both the legend and the per-chunk badges: colour is a
    redundant reinforcement of text that already says everything (SPEC 5.6). */
 const badgeClass =
-  "inline-flex items-center rounded-sm border border-[hsl(var(--atlas-retriever))]/40 bg-[hsl(var(--atlas-retriever))]/10 px-1.5 py-px text-[0.6875rem] leading-4 text-[hsl(var(--atlas-retriever))]";
+  "inline-flex items-center rounded-sm border border-solid border-[hsl(var(--atlas-retriever))]/40 bg-[hsl(var(--atlas-retriever))]/10 px-1.5 py-px text-[0.6875rem] leading-4 text-[hsl(var(--atlas-retriever))]";
 
 function colorVars(color: string): CSSVars {
   /* A colour unknowable at build time, as a custom property (SPEC 4.4). */

@@ -34,7 +34,7 @@ export function CitationPreview(props: CitationPreviewProps): React.JSX.Element 
       </div>
 
       {source.snippet && (
-        <p className="m-0 border-l-2 border-border pl-2 text-xs leading-relaxed text-fg-muted">
+        <p className="m-0 border-0 border-l-2 border-solid border-border pl-2 text-xs leading-relaxed text-fg-muted">
           {source.snippet}
         </p>
       )}

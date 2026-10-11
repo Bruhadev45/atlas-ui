@@ -30,7 +30,7 @@ const NO_ATTACHMENTS: readonly ComposerAttachment[] = [];
 const NO_COMMANDS: readonly SlashCommand[] = [];
 
 const ICON_BUTTON =
-  "inline-flex size-8 shrink-0 items-center justify-center rounded text-fg-muted transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50";
+  "inline-flex size-8 shrink-0 items-center justify-center rounded border-0 bg-transparent text-fg-muted transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50";
 
 /** Announce the character budget once, on the way in. */
 const WARN_AT = 0.9;
@@ -242,7 +242,7 @@ export const AssistantComposer = React.forwardRef<HTMLFormElement, AssistantComp
         <div
           data-drag-active={dragActive ? "" : undefined}
           className={cn(
-            "relative flex flex-col gap-2 rounded-lg border border-border bg-surface p-2 focus-within:ring-2 focus-within:ring-ring",
+            "relative flex flex-col gap-2 rounded-lg border border-solid border-border bg-surface p-2 focus-within:ring-2 focus-within:ring-ring",
             dragActive && "border-accent bg-accent/5 ring-2 ring-accent"
           )}
           onDragEnter={
@@ -306,7 +306,7 @@ export const AssistantComposer = React.forwardRef<HTMLFormElement, AssistantComp
               inputProps.onChange?.(event);
               setValue(event.currentTarget.value);
             }}
-            className="w-full resize-none bg-transparent px-1 text-sm text-fg outline-none placeholder:text-fg-subtle disabled:cursor-not-allowed"
+            className="w-full resize-none border-0 bg-transparent px-1 text-sm text-fg outline-none [font-family:inherit] placeholder:text-fg-subtle disabled:cursor-not-allowed"
           />
 
           {menuOpen && (
@@ -350,7 +350,7 @@ export const AssistantComposer = React.forwardRef<HTMLFormElement, AssistantComp
                 <button
                   type="button"
                   onClick={onStop}
-                  className="inline-flex h-8 items-center rounded border border-border px-3 text-sm text-fg-muted transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex h-8 items-center rounded border border-solid border-border bg-transparent px-3 text-sm text-fg-muted transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {labels.stop}
                 </button>
@@ -359,7 +359,7 @@ export const AssistantComposer = React.forwardRef<HTMLFormElement, AssistantComp
                 type="submit"
                 disabled={!canSubmit}
                 aria-label={labels.send}
-                className="inline-flex h-8 items-center rounded bg-accent px-3 text-sm font-medium text-accent-fg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+                className="inline-flex h-8 items-center rounded border-0 bg-accent px-3 text-sm font-medium text-accent-fg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
               >
                 <span aria-hidden="true">&uarr;</span>
               </button>

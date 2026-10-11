@@ -62,7 +62,7 @@ describe("CitationChip trigger", () => {
     render(<CitationChip index={1} tone={tone} source={source} />);
     const chip = screen.getByRole("button", { name });
     expect(chip).toHaveAttribute("data-tone", tone);
-    expect(chip.className).toContain(tone === "accent" ? "bg-accent/12" : "bg-surface-sunken");
+    expect(chip.className).toContain(tone === "accent" ? "bg-accent/10" : "bg-surface-sunken");
   });
 
   it("merges className last, spreads unknown props, and forwards its ref", () => {

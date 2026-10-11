@@ -2,7 +2,7 @@ import * as React from "react";
 import type { StreamStatus, StreamingMessageLabels } from "./streaming-message.types";
 
 const BUTTON_CLASS =
-  "inline-flex items-center gap-1.5 rounded border border-border px-2 py-1 text-xs text-fg-muted transition-colors hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex items-center gap-1.5 rounded border border-solid border-border bg-transparent px-2 py-1 text-xs text-fg-muted transition-colors hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export interface StreamActionsProps {
   status: StreamStatus;
